@@ -2,8 +2,8 @@ import {useEffect,useRef,useState} from 'react';
 import {Mood} from './weather';
 export function useNature(mood:Mood){
  const ref=useRef<HTMLAudioElement|null>(null);const [on,setOn]=useState(false);const [volume,setVolume]=useState(.6);const [error,setError]=useState('');const [pending,setPending]=useState(false);
- const [sound,setSound]=useState<'piano'|'nature'|'rain'>('piano');
- const track=sound==='piano'?'piano':sound==='rain'?'rain':mood==='night'?'night':mood==='rain'||mood==='drizzle'?'rain':'sun';
+ const [sound,setSound]=useState<'nature'|'water'|'rain'|'night'>('nature');
+ const track=sound;
  const src=`${import.meta.env.BASE_URL}audio/${track}.mp3`;
  useEffect(()=>{const a=ref.current;if(a)a.volume=volume},[volume]);
  useEffect(()=>{const a=ref.current;if(!a)return;const wasPlaying=on;a.src=src;a.load();if(wasPlaying){setPending(true);void a.play().catch(()=>{setError('Chạm Bật âm thanh để tiếp tục.');setOn(false)}).finally(()=>setPending(false))}},[src]);
