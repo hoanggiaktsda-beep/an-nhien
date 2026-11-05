@@ -1,11 +1,9 @@
-import React,{useMemo,useRef} from 'react';
+import {useMemo,useRef} from 'react';
 import {useFrame} from '@react-three/fiber';
 import {Stars,ContactShadows} from '@react-three/drei';
-import {Color,Group,MathUtils,Mesh,MeshStandardMaterial} from 'three';
+import type {Group} from 'three';
 import type {Mood} from './weather';
 
-const wet=new Color('#758e8a');
-const dry=new Color('#c9bda4');
 export function CinematicAtmosphere({mood}:{mood:Mood}){
  const night=mood==='night', raining=mood==='rain'||mood==='drizzle';
  const lantern=useRef<Group>(null);
