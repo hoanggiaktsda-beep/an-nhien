@@ -20,8 +20,10 @@ export function CinematicAtmosphere({mood}:{mood:Mood}){
    });
  });
  return <>
-   <hemisphereLight args={[night?'#6d819f':'#d7e8e0',night?'#1b2529':'#7a6852',night?.4:1.15]}/>
-   <directionalLight position={[-6,9,-8]} intensity={night?.18:raining?.55:2.2} color={night?'#b2c7f2':'#ffe2b5'} castShadow shadow-mapSize={[1024,1024]} shadow-camera-left={-9} shadow-camera-right={9} shadow-camera-top={9} shadow-camera-bottom={-9} shadow-bias={-.0003}/>
+   <hemisphereLight args={[night?'#6d819f':'#d7e8e0',night?'#1b2529':'#7a6852',night?.55:1.65]}/>
+   <directionalLight position={[-6,9,-8]} intensity={night?.22:raining?.85:2.2} color={night?'#b2c7f2':'#ffe2b5'} castShadow shadow-mapSize={[1024,1024]} shadow-camera-left={-9} shadow-camera-right={9} shadow-camera-top={9} shadow-camera-bottom={-9} shadow-bias={-.0003}/>
+   <pointLight position={[-2.6,2.65,-1.6]} intensity={night?3.2:raining?4.6:2.2} distance={9} decay={2} color="#ffd2a0"/>
+   <pointLight position={[2.7,2.5,-.8]} intensity={night?2.1:raining?3.2:1.7} distance={8} decay={2} color="#ffe1b8"/>
    <ContactShadows position={[0,.012,0]} opacity={night?.22:.32} scale={9} blur={2.5} far={3} resolution={256} color="#182b2c"/>
    {night&&<Stars radius={70} depth={30} count={500} factor={2} saturation={0} fade speed={.1}/>}
    <group ref={lantern} position={[2.7,0,1.8]}>
