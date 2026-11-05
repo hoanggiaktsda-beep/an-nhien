@@ -29,3 +29,5 @@
 .quality-control span{opacity:.72;min-width:105px}
 @media(max-width:700px){.quality-control{justify-content:space-between;gap:6px;margin:4px 0}.quality-control select{font-size:11px;max-width:125px}.quality-control span{font-size:9px;min-width:auto}}
 @media(max-height:540px) and (orientation:landscape){.quality-control{flex-wrap:wrap;justify-content:flex-start}}
+
+.explore-toggle{border:1px solid #e5dfc077;border-radius:20px;padding:6px 12px;background:#1b4344c9;font-size:12px;min-height:36px}.explore-toggle[aria-pressed=true]{background:#e2d6b9;color:#25413d}@media(max-width:700px){.quality-control{flex-wrap:wrap}.explore-toggle{width:100%;order:-1}}
