@@ -4,15 +4,16 @@ import {Canvas,useFrame} from '@react-three/fiber';
 import {useGLTF} from '@react-three/drei';
 import {Vector3,ACESFilmicToneMapping,SRGBColorSpace} from 'three';
 import {CinematicAtmosphere} from './CinematicAtmosphere';
+import {CinematicInterior} from './CinematicInterior';
 import './style.css';
 import {RelaxPlay} from './RelaxPlay';
 import {useNature} from './useNature';
-import {LivingLake,Garden,Interior,PoeticView} from './PoeticScene';
+import {LivingLake,Garden,PoeticView} from './PoeticScene';
 import {Mood,moods} from './weather';
 type Place='room'|'terrace';
 function House(){const g=useGLTF(`${import.meta.env.BASE_URL}models/an-nhien-g1-rev-c.glb`);return <primitive object={g.scene}/>}
 function Camera({place}:{place:Place}){const target=useRef(new Vector3());useFrame(({camera},dt)=>{target.current.set(...(place==='room'?[0,1.15,-1.8]:[1.3,1.15,4.5]) as [number,number,number]);camera.position.lerp(target.current,1-Math.exp(-dt*.7));camera.lookAt(0,1,12)});return null}
-function Scene({place,mood}:{place:Place,mood:Mood}){return <Canvas shadows gl={{antialias:true,alpha:false,toneMapping:ACESFilmicToneMapping,outputColorSpace:SRGBColorSpace}} camera={{position:[0,1.15,-1.8],fov:58,near:.08,far:90}} dpr={[1,1.5]}><color attach="background" args={[moods[mood].color]}/><fog attach="fog" args={[moods[mood].color,14,46]}/><ambientLight intensity={moods[mood].light*.22}/><CinematicAtmosphere mood={mood}/><React.Suspense fallback={null}><House/></React.Suspense><LivingLake mood={mood}/><Garden/><Interior/><Camera place={place}/></Canvas>}
+function Scene({place,mood}:{place:Place,mood:Mood}){return <Canvas shadows gl={{antialias:true,alpha:false,toneMapping:ACESFilmicToneMapping,outputColorSpace:SRGBColorSpace}} camera={{position:[0,1.15,-1.8],fov:58,near:.08,far:90}} dpr={[1,1.5]}><color attach="background" args={[moods[mood].color]}/><fog attach="fog" args={[moods[mood].color,14,46]}/><ambientLight intensity={moods[mood].light*.22}/><CinematicAtmosphere mood={mood}/><React.Suspense fallback={null}><House/></React.Suspense><LivingLake mood={mood}/><Garden/><CinematicInterior/><Camera place={place}/></Canvas>}
 class Boundary extends React.Component<{children:React.ReactNode;fail:()=>void},{bad:boolean}>{state={bad:false};static getDerivedStateFromError(){return {bad:true}}componentDidCatch(){this.props.fail()}render(){return this.state.bad?null:this.props.children}}
 function App(){const [mood,setMood]=useState<Mood>('rain');const [place,setPlace]=useState<Place>('room');const [light,setLight]=useState(false);const [panel,setPanel]=useState(false);const [quiet,setQuiet]=useState(false);const [playing,setPlaying]=useState(false);const [breath,setBreath]=useState(false);const [elapsed,setElapsed]=useState(0);const audio=useNature(mood);useEffect(()=>{if(!breath)return;const start=Date.now();const id=setInterval(()=>{const n=Math.floor((Date.now()-start)/1000);setElapsed(Math.min(n,180));if(n>=180)setBreath(false)},250);return ()=>clearInterval(id)},[breath]);useEffect(()=>{const f=(e:KeyboardEvent)=>{if(e.key==='Escape')setQuiet(false)};window.addEventListener('keydown',f);return ()=>window.removeEventListener('keydown',f)},[]);const phase=elapsed%12<4?'Hít vào':elapsed%12<6?'Thả lỏng':'Thở ra';return <main className={`sanctuary ${mood} ${quiet?'quiet':''} ${panel?'panel-open':''}`}>
 <div className="scene"><PoeticView place={place}/>{!light&&<Boundary fail={()=>setLight(true)}><Scene place={place} mood={mood}/></Boundary>}</div>
