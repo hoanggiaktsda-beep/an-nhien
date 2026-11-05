@@ -5,7 +5,7 @@ export type CameraPlace='room'|'terrace';
 // V2.1: seated-eye composition, furniture foreground and lake through glazing.
 // Architectural G1 geometry remains unchanged.
 export const CAMERA_VIEWS:Record<CameraPlace,{eye:[number,number,number];target:[number,number,number];fov:number}>={
- room:{eye:[1.65,1.18,-3.35],target:[-.35,1.3,6.4],fov:62},
+ room:{eye:[1.45,1.18,-2.45],target:[-.35,1.3,6.4],fov:62},
  terrace:{eye:[1.2,1.45,4.3],target:[0,1.2,13],fov:58}
 };
 export function CinematicCamera({place}:{place:CameraPlace}){
